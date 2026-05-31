@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 # Build the application using maven or gradle
-RUN ./nvmw clean package -DskipTests
+RUN ./mvnw clean package -DskipTests
 
 # Stage 2: Run the application
 FROM  eclipse-temurin:25-jre
