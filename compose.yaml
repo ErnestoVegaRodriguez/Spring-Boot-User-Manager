@@ -1,4 +1,5 @@
 services:
+
   app:
     build:
       context: .
@@ -9,10 +10,22 @@ services:
       - postgres
 
   postgres:
-    image: 'postgres:latest'
-    environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+    image: postgres:18.3
+    restart: unless-stopped
+    volumes:
+      - postgres-data-spring:/var/lib/postgresql
+    deploy:
+      resources:
+        limits:
+          cpus: 2
+          memory: 4G
+    env_file:
+      - compose.env
     ports:
-      - '5432'
+      - target: 5432
+        published: 5432
+        host_ip: "127.0.0.1"
+        protocol: tcp
+    
+volumes:
+  postgres-data-spring:
