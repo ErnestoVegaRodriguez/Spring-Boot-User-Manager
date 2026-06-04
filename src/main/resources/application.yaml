@@ -1,3 +1,7 @@
 spring:
   application:
     name: Spring-Boot-User-Manager
+
+  config:
+    import:
+    - secrets.yaml
