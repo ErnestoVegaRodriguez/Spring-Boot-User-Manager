@@ -1,7 +1,25 @@
 spring:
+  docker:
+    compose:
+      enabled: true
+
   application:
     name: Spring-Boot-User-Manager
 
   config:
     import:
-    - secrets.yaml
+      - secrets.yaml
+
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          create_namespaces: true #load schemas before create tables CREATE IF EXISTS
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
