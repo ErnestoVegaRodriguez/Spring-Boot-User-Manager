@@ -1,17 +1,24 @@
-# Stage 1: Build the application
+# Stage 1: Build
 FROM eclipse-temurin:25-jdk AS builder
-
-# Set the working directory
 WORKDIR /app
 
-# Copy the application code
-COPY . .
+# 1. Copiar el wrapper de Maven primero
+COPY .mvn/ .mvn/
+COPY mvnw pom.xml ./
 
-# Build the application using maven or gradle
+# 2. Descargar dependencias (esta capa se cachea si pom.xml no cambia)
+# dependency:go-offline le dice a Maven "descarga todo lo que necesitas ahora". 
+# Así esa capa queda cacheada y los builds siguientes son mucho más rápidos.
+RUN ./mvnw dependency:go-offline -q
+
+# 3. Copiar el código fuente (esto sí cambia seguido)
+COPY src ./src
+
+# 4. Construir
 RUN ./mvnw clean package -DskipTests
 
 # Stage 2: Run the application
-FROM  eclipse-temurin:25-jre
+FROM  eclipse-temurin:25-jre AS runtime
 
 # Set the working directory
 WORKDIR /app

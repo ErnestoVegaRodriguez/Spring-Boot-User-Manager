@@ -1,19 +1,26 @@
 services:
 
-  app:
+  spring-api:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - '8080:8080'
-    depends_on:
-      - postgres
+    networks:
+      - default
+      - secure-backend
+    # depends_on:
+    #   spring-database:
+    #     condition: service_healthy   # Espera que la BD esté lista
 
-  postgres:
+  spring-database:
     image: postgres:18.3
     restart: unless-stopped
+    networks:
+      - default
+      - secure-backend
     volumes:
-      - postgres-data-spring:/var/lib/postgresql
+      - postgres-data:/var/lib/postgresql
     deploy:
       resources:
         limits:
@@ -26,6 +33,17 @@ services:
         published: 5432
         host_ip: "127.0.0.1"
         protocol: tcp
-    
+
+networks:
+  default: {} # red normal con acceso a internet
+  secure-backend:
+    internal: true # red aislada solo para comunicación interna
+
 volumes:
-  postgres-data-spring:
+  postgres-data:
+
+# ¿Qué hace internal: true? Aísla la red completamente del exterior. 
+# Los contenedores dentro de ella solo pueden hablarse entre sí, sin acceso a internet.
+# ¿Por qué es un problema? Tu spring-api necesita descargar dependencias de Maven y 
+# conectarse a internet durante el build. 
+# Con internal: true, eso está bloqueado.
