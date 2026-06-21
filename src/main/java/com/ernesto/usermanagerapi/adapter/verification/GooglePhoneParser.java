@@ -1,4 +1,4 @@
-package com.ernesto.usermanagerapi.adapter.phone;
+package com.ernesto.usermanagerapi.adapter.verification;
 
 import java.util.List;
 import java.util.Map;

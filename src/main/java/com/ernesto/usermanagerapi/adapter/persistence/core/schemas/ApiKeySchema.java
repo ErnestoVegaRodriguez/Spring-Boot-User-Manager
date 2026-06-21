@@ -1,4 +1,4 @@
-package com.ernesto.usermanagerapi.adapter.storage.core.schemas;
+package com.ernesto.usermanagerapi.adapter.persistence.core.schemas;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

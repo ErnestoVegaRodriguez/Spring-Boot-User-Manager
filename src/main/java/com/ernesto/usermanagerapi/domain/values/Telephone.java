@@ -18,7 +18,7 @@ import lombok.Getter;
  * protege de cambios en librerías de validación telefónica.
  *
  * @see com.ernesto.usermanagerapi.application.ports.drivens.PhoneParser
- * @see com.ernesto.usermanagerapi.adapter.phone.GooglePhoneParser
+ * @see com.ernesto.usermanagerapi.adapter.verification.GooglePhoneParser
  */
 @Getter
 public class Telephone {

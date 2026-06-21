@@ -1,4 +1,4 @@
-package com.ernesto.usermanagerapi.adapter.storage.core.ports.drivers;
+package com.ernesto.usermanagerapi.adapter.persistence.core.ports.drivers;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ernesto.usermanagerapi.adapter.storage.core.schemas.ApiKeySchema;
+import com.ernesto.usermanagerapi.adapter.persistence.core.schemas.ApiKeySchema;
 
 public interface ApiKeyJpaRepository extends JpaRepository<ApiKeySchema, Integer> {
 

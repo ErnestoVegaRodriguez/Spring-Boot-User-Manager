@@ -1,4 +1,4 @@
-package com.ernesto.usermanagerapi.adapter.storage.core.ports.drivers;
+package com.ernesto.usermanagerapi.adapter.persistence.core.ports.drivers;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.ernesto.usermanagerapi.adapter.storage.core.schemas.UserSchema;
+import com.ernesto.usermanagerapi.adapter.persistence.core.schemas.UserSchema;
 
 public interface UserJpaRepository extends JpaRepository<UserSchema, UUID> {
 

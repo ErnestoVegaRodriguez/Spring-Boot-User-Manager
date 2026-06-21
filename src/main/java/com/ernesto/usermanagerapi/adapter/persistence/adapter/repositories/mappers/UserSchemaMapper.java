@@ -1,13 +1,13 @@
-package com.ernesto.usermanagerapi.adapter.storage.adapter.repositories.mappers;
+package com.ernesto.usermanagerapi.adapter.persistence.adapter.repositories.mappers;
 
 import java.util.List;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.ernesto.usermanagerapi.adapter.storage.core.schemas.ApiKeySchema;
-import com.ernesto.usermanagerapi.adapter.storage.core.schemas.TelephoneEmbeddable;
-import com.ernesto.usermanagerapi.adapter.storage.core.schemas.UserSchema;
+import com.ernesto.usermanagerapi.adapter.persistence.core.schemas.ApiKeySchema;
+import com.ernesto.usermanagerapi.adapter.persistence.core.schemas.TelephoneEmbeddable;
+import com.ernesto.usermanagerapi.adapter.persistence.core.schemas.UserSchema;
 import com.ernesto.usermanagerapi.domain.entities.ApiKey;
 import com.ernesto.usermanagerapi.domain.entities.Role;
 import com.ernesto.usermanagerapi.domain.entities.User;

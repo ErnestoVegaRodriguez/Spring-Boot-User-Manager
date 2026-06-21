@@ -7,14 +7,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.ernesto.usermanagerapi.adapter.auth.SpringSecurityApiKeyGenerator;
-import com.ernesto.usermanagerapi.adapter.hash.SpringSecurityApiKeyHasher;
-import com.ernesto.usermanagerapi.adapter.hash.SpringSecurityPasswordHasher;
+import org.springframework.web.client.RestTemplate;
+
+import com.ernesto.usermanagerapi.adapter.authentication.SpringSecurityApiKeyGenerator;
+import com.ernesto.usermanagerapi.adapter.authentication.options.GeneratorSetting;
+import com.ernesto.usermanagerapi.adapter.encoding.SpringSecurityApiKeyHasher;
+import com.ernesto.usermanagerapi.adapter.encoding.SpringSecurityPasswordHasher;
 import com.ernesto.usermanagerapi.application.ports.drivens.ApiKeyGenerator;
 import com.ernesto.usermanagerapi.application.ports.drivens.HasherService;
 
+@EnableAsync
 @Configuration
 public class AppConfig {
 
@@ -35,9 +40,16 @@ public class AppConfig {
     @Scope("singleton")
     public ApiKeyGenerator apiKeyGenerator() {
         return new SpringSecurityApiKeyGenerator(
-            new SecureRandom(), 
-            Base64.getUrlEncoder().withoutPadding(), 
-            32);
+                new GeneratorSetting()
+                        .keyLengthBytes(32)
+                        .encoder(Base64.getUrlEncoder().withoutPadding())
+                        .secureRandom(new SecureRandom()));
+    }
+
+    @Bean
+    @Scope("prototype")
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
 }

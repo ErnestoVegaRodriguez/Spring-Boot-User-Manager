@@ -1,4 +1,4 @@
-package com.ernesto.usermanagerapi.adapter.storage.adapter.repositories;
+package com.ernesto.usermanagerapi.adapter.persistence.adapter.repositories;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,13 +8,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
 import lombok.AllArgsConstructor;
-import com.ernesto.usermanagerapi.adapter.storage.adapter.repositories.mappers.ApiKeySchemaMapper;
-import com.ernesto.usermanagerapi.adapter.storage.core.ports.drivers.ApiKeyJpaRepository;
-import com.ernesto.usermanagerapi.adapter.storage.core.schemas.ApiKeySchema;
+
 import com.ernesto.usermanagerapi.domain.entities.ApiKey;
 import com.ernesto.usermanagerapi.domain.enums.ErrorCode;
 import com.ernesto.usermanagerapi.domain.exceptions.NotFoundException;
 import com.ernesto.usermanagerapi.domain.patterns.Result;
+import com.ernesto.usermanagerapi.adapter.persistence.adapter.repositories.mappers.ApiKeySchemaMapper;
+import com.ernesto.usermanagerapi.adapter.persistence.core.ports.drivers.ApiKeyJpaRepository;
+import com.ernesto.usermanagerapi.adapter.persistence.core.schemas.ApiKeySchema;
 import com.ernesto.usermanagerapi.application.ports.drivens.ApiKeyRepository;
 
 @Repository

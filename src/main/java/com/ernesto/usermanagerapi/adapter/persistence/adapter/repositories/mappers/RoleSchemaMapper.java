@@ -1,11 +1,11 @@
-package com.ernesto.usermanagerapi.adapter.storage.adapter.repositories.mappers;
+package com.ernesto.usermanagerapi.adapter.persistence.adapter.repositories.mappers;
 
 import java.util.ArrayList;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.ernesto.usermanagerapi.adapter.storage.core.schemas.RoleSchema;
+import com.ernesto.usermanagerapi.adapter.persistence.core.schemas.RoleSchema;
 import com.ernesto.usermanagerapi.domain.entities.Role;
 
 @Component

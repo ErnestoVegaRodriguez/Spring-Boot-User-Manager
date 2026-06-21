@@ -1,4 +1,4 @@
-package com.ernesto.usermanagerapi.adapter.storage.core.schemas;
+package com.ernesto.usermanagerapi.adapter.persistence.core.schemas;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

@@ -1,4 +1,4 @@
-package com.ernesto.usermanagerapi.adapter.hash;
+package com.ernesto.usermanagerapi.adapter.encoding;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import com.ernesto.usermanagerapi.application.ports.drivens.HasherService;
 
 @AllArgsConstructor
-public class SpringSecurityPasswordHasher implements HasherService {
+public class SpringSecurityApiKeyHasher implements HasherService {
 
     private final BCryptPasswordEncoder encoder;
 
