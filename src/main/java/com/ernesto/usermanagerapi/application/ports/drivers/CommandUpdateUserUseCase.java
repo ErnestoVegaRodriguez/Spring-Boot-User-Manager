@@ -1,0 +1,14 @@
+package com.ernesto.usermanagerapi.application.ports.drivers;
+
+import java.util.UUID;
+
+import com.ernesto.usermanagerapi.application.dto.UpdateUserRequest;
+import com.ernesto.usermanagerapi.application.dto.UserResponse;
+import com.ernesto.usermanagerapi.domain.exceptions.DomainException;
+import com.ernesto.usermanagerapi.domain.patterns.Result;
+
+public interface CommandUpdateUserUseCase {
+
+    public Result<UserResponse, DomainException> execute(UUID id, UpdateUserRequest request);
+
+}
