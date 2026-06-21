@@ -29,11 +29,11 @@ public class CommandCreateRoleUseCaseImpl implements CommandCreateRoleUseCase {
         var createdResult = Role.create(request.name(), request.permissions());
 
         if (!createdResult.isSuccess()) {
-            DomainException validationError = createdResult.getError().get();
+            DomainException validationError = createdResult.getError();
             return Result.failure(validationError);
         }
 
-        Role validRole = createdResult.getValue().get();
+        Role validRole = createdResult.getValue();
 
         // 2. Check for duplicate name
         var existingResult = roleRepository.findByName(validRole.getName());

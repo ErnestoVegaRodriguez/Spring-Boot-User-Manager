@@ -28,17 +28,17 @@ public class CommandUpdateRoleUseCaseImpl implements CommandUpdateRoleUseCase {
         var findResult = roleRepository.findById(roleId);
 
         if (!findResult.isSuccess()) {
-            DomainException notFoundError = findResult.getError().get();
+            DomainException notFoundError = findResult.getError();
             return Result.failure(notFoundError);
         }
 
-        Role existingRole = findResult.getValue().get();
+        Role existingRole = findResult.getValue();
 
         // 2. Apply domain validation via update
         var updateResult = existingRole.update(request.name(), request.permissions());
 
         if (!updateResult.isSuccess()) {
-            DomainException validationError = updateResult.getError().get();
+            DomainException validationError = updateResult.getError();
             return Result.failure(validationError);
         }
 

@@ -37,11 +37,11 @@ public class RoleController {
         Result<List<RoleResponse>, DomainException> result = queryAllRoleUseCase.execute();
 
         if (result.isSuccess()) {
-            List<RoleResponse> response = result.getValue().get();
+            List<RoleResponse> response = result.getValue();
             return ResponseEntity.ok(ApiResponse.success(response, "GetAll Results"));
         }
 
-        DomainException error = result.getError().get();
+        DomainException error = result.getError();
         HttpStatus status = errorCodeMapper.toHttpStatus(error.getErrorCode());
         return ResponseEntity.status(status).body(ApiResponse.error(error.getMessage()));
     }
@@ -51,11 +51,11 @@ public class RoleController {
         Result<RoleResponse, DomainException> result = queryRoleByIdUseCase.execute(id);
 
         if (result.isSuccess()) {
-            RoleResponse response = result.getValue().get();
+            RoleResponse response = result.getValue();
             return ResponseEntity.ok(ApiResponse.success(response, "GetOne Result"));
         }
 
-        DomainException error = result.getError().get();
+        DomainException error = result.getError();
         HttpStatus status = errorCodeMapper.toHttpStatus(error.getErrorCode());
         return ResponseEntity.status(status).body(ApiResponse.error(error.getMessage()));
     }
@@ -65,12 +65,12 @@ public class RoleController {
         Result<RoleResponse, DomainException> result = createRoleUseCase.execute(request);
 
         if (result.isSuccess()) {
-            RoleResponse response = result.getValue().get();
+            RoleResponse response = result.getValue();
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(ApiResponse.success(response, "Role created successfully"));
         }
 
-        DomainException error = result.getError().get();
+        DomainException error = result.getError();
         HttpStatus status = errorCodeMapper.toHttpStatus(error.getErrorCode());
         return ResponseEntity.status(status).body(ApiResponse.error(error.getMessage()));
     }
@@ -80,11 +80,11 @@ public class RoleController {
         Result<RoleResponse, DomainException> result = updateRoleUseCase.execute(id, request);
 
         if (result.isSuccess()) {
-            RoleResponse response = result.getValue().get();
+            RoleResponse response = result.getValue();
             return ResponseEntity.ok(ApiResponse.success(response, "Update Result"));
         }
 
-        DomainException error = result.getError().get();
+        DomainException error = result.getError();
         HttpStatus status = errorCodeMapper.toHttpStatus(error.getErrorCode());
         return ResponseEntity.status(status).body(ApiResponse.error(error.getMessage()));
     }
@@ -97,7 +97,7 @@ public class RoleController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        DomainException error = result.getError().get();
+        DomainException error = result.getError();
         HttpStatus status = errorCodeMapper.toHttpStatus(error.getErrorCode());
         return ResponseEntity.status(status).body(ApiResponse.error(error.getMessage()));
     }

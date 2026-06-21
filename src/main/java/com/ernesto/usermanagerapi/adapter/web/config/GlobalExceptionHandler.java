@@ -8,11 +8,23 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.ernesto.usermanagerapi.application.dto.ApiResponse;
+import com.ernesto.usermanagerapi.domain.exceptions.DomainException;
+
+import lombok.AllArgsConstructor;
 
 @ControllerAdvice
+@AllArgsConstructor
 public class GlobalExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    private final ErrorCodeHttpMapper errorCodeMapper;
+
+    @ExceptionHandler(DomainException.class)
+    public ResponseEntity<ApiResponse<Void>> handleDomain(DomainException exception) {
+        log.warn("Domain error: {}", exception.getMessage());
+        HttpStatus status = errorCodeMapper.toHttpStatus(exception.getErrorCode());
+        return ResponseEntity.status(status).body(ApiResponse.error(exception.getMessage()));
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleUnexpected(Exception exception) {

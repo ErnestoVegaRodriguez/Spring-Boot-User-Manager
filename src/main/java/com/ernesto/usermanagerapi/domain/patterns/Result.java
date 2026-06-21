@@ -2,9 +2,6 @@ package com.ernesto.usermanagerapi.domain.patterns;
 
 import java.util.Optional;
 
-import lombok.Getter;
-
-@Getter
 public class Result<TValue, TError> {
 
     private final Optional<TValue> value;
@@ -23,6 +20,18 @@ public class Result<TValue, TError> {
 
     public static <TValue, TError> Result<TValue, TError> failure(TError error) {
         return new Result<>(null, error, false);
+    }
+
+    public TValue getValue() {
+        return value.get();
+    }
+
+    public TError getError() {
+        return error.get();
+    }
+
+    public boolean isSuccess() {
+        return isSuccess;
     }
 
 }

@@ -28,11 +28,11 @@ public class CommandDeleteRoleUseCaseImpl implements CommandDeleteRoleUseCase {
         var findResult = roleRepository.findById(roleId);
 
         if (!findResult.isSuccess()) {
-            DomainException notFoundError = findResult.getError().get();
+            DomainException notFoundError = findResult.getError();
             return Result.failure(notFoundError);
         }
 
-        Role existingRole = findResult.getValue().get();
+        Role existingRole = findResult.getValue();
 
         // 2. Revoke role from all users that have it assigned
         userRepository.removeRoleFromAllUsers(roleId);

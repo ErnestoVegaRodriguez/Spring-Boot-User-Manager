@@ -27,11 +27,11 @@ public class QueryRoleByIdUseCaseImpl implements QueryRoleByIdUseCase {
         var repoResult = roleRepository.findById(roleId);
 
         if (!repoResult.isSuccess()) {
-            DomainException notFoundError = repoResult.getError().get();
+            DomainException notFoundError = repoResult.getError();
             return Result.failure(notFoundError);
         }
 
-        Role role = repoResult.getValue().get();
+        Role role = repoResult.getValue();
 
         // 2. Convert to DTO
         RoleResponse response = mapper.toDto(role);
