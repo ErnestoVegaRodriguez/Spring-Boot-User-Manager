@@ -22,16 +22,16 @@ public class Role {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Role() {
+    private Role() {
     }
 
-    public Role(String name, List<Permission> permissions) {
+    private Role(String name, List<Permission> permissions) {
         this.name = name;
         this.permissions = permissions;
         this.createdAt = LocalDateTime.now();
     }
 
-    public Role(int roleId, String name, List<Permission> permissions) {
+    private Role(int roleId, String name, List<Permission> permissions) {
         this.roleId = roleId;
         this.name = name;
         this.permissions = permissions;
@@ -70,7 +70,7 @@ public class Role {
         if (!errorList.isEmpty())
             return Result.failure(new ValidationException(ErrorCode.VALIDATION_ERROR, "Role validation failed.", errorList));
 
-        return Result.success(new Role(name, permissions));
+        return Result.success(new Role(roleId, name, permissions));
     }
 
     public Result<Void, ValidationException> update(String name, List<Permission> permissions) {
