@@ -9,8 +9,10 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import com.ernesto.usermanagerapi.adapter.authentication.SpringSecurityApiKeyGenerator;
 import com.ernesto.usermanagerapi.adapter.authentication.options.GeneratorSetting;
@@ -50,6 +52,24 @@ public class AppConfig {
     @Scope("prototype")
     public RestTemplate restTemplate() {
         return new RestTemplate();
+    }
+
+    /*
+     * ObjectMapper configurado con findAndAddModules() para que detecte
+     * automáticamente los módulos Jackson en el classpath.
+     * Esto incluye JavaTimeModule (soporte para Instant, LocalDateTime, etc.)
+     * sin necesidad de registrarlo manualmente.
+     *
+     * Spring Boot debería auto-configurar este bean, pero en algunos entornos
+     * no se registra como dependencia inyectable. Se declara explícitamente
+     * para garantizar disponibilidad en SuscriptorController y otros beans.
+     */
+    @Bean
+    @Scope("singleton")
+    public ObjectMapper objectMapper() {
+        return JsonMapper.builder()
+                .findAndAddModules()
+                .build();
     }
 
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.ernesto.usermanagerapi.adapter.messaging.WebhookPublisher;
 import com.ernesto.usermanagerapi.application.dto.CreateUserRequest;
 import com.ernesto.usermanagerapi.application.dto.UserResponse;
 import com.ernesto.usermanagerapi.application.mappers.UserDtoMapper;
@@ -12,9 +13,11 @@ import com.ernesto.usermanagerapi.application.ports.drivens.PhoneParser;
 import com.ernesto.usermanagerapi.application.ports.drivens.UserRepository;
 import com.ernesto.usermanagerapi.application.ports.drivers.CommandCreateUserUseCase;
 import com.ernesto.usermanagerapi.domain.entities.User;
+import com.ernesto.usermanagerapi.domain.enums.DeliveryType;
 import com.ernesto.usermanagerapi.domain.enums.ErrorCode;
 import com.ernesto.usermanagerapi.domain.exceptions.DomainException;
 import com.ernesto.usermanagerapi.domain.exceptions.ValidationException;
+import com.ernesto.usermanagerapi.domain.patterns.Delivery;
 import com.ernesto.usermanagerapi.domain.patterns.Result;
 import com.ernesto.usermanagerapi.domain.values.Email;
 import com.ernesto.usermanagerapi.domain.values.Password;
@@ -31,6 +34,7 @@ public class CommandCreateUserUseCaseImpl implements CommandCreateUserUseCase {
     private final @Qualifier("passwordHasher") HasherService hasherService;
     private final PhoneParser phoneParser;
     private final UserDtoMapper mapper;
+    private final WebhookPublisher publisher;
 
     @Override
     public Result<UserResponse, DomainException> execute(CreateUserRequest request) {
@@ -90,6 +94,10 @@ public class CommandCreateUserUseCaseImpl implements CommandCreateUserUseCase {
 
         // 8. Convert to DTO
         UserResponse response = mapper.toDto(savedUser);
+
+        Delivery<UserResponse> message = Delivery.create(DeliveryType.CREATED_USER, response); 
+
+        publisher.publish(message);
 
         return Result.success(response);
     }
