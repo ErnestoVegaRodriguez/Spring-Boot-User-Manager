@@ -11,7 +11,9 @@ services:
       - secure-backend
     # depends_on:
     #   spring-database:
-    #     condition: service_healthy   # Espera que la BD esté lista
+    #     condition: service_healthy
+    #   spring-queue:
+    #     condition: service_healthy
 
   spring-database:
     image: postgres:18.3
@@ -33,6 +35,31 @@ services:
         published: 5432
         host_ip: "127.0.0.1"
         protocol: tcp
+    # healthcheck:
+    #   test: ["CMD-SHELL", "pg_isready -U myuser -d mydatabase"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+    #   start_period: 10s
+
+  spring-queue:
+    image: rabbitmq:4.3.2-management
+    restart: unless-stopped
+    networks:
+      - default
+      - secure-backend
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin123
+    ports:
+      - "5672:5672"   # Puerto AMQP (comunicación entre aplicaciones y RabbitMQ)
+      - "15672:15672" # Puerto de management UI (consola web: http://localhost:15672)
+    # healthcheck:
+    #   test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+    #   start_period: 30s
 
 networks:
   default: {} # red normal con acceso a internet
