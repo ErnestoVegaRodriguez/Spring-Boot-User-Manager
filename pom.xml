@@ -93,6 +93,18 @@
 			<artifactId>libphonenumber</artifactId>
 			<version>8.13.52</version>
 		</dependency>
+
+		<!--
+		spring-boot-starter-amqp: habilita la integración con RabbitMQ.
+		Incluye RabbitTemplate para publicar mensajes y @RabbitListener
+		para consumirlos de forma reactiva (sin polling).
+		Auto-configura la ConnectionFactory a partir de spring.rabbitmq.*
+		en application.yaml.
+		-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
